@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meir Scott — Life Coach (V4 Warm)</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root {
+      --bg:        #F7F1E8;
+      --surface:   #EFE8DA;
+      --surface2:  #E8DFD0;
+      --terra:     #BF5C2C;
+      --terra-lt:  #D97040;
+      --terra-dk:  #9A451E;
+      --sand:      #C8A97A;
+      --text:      #2C1F14;
+      --mid:       #6B5040;
+      --muted:     #A08870;
+      --rule:      #D8CCBC;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Lato', sans-serif; margin: 0; }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+
+    /* Nav */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; transition: background 0.35s, border-color 0.35s; border-bottom: 1px solid transparent; }
+    nav.scrolled { background: rgba(247,241,232,0.92); backdrop-filter: blur(10px); border-color: var(--rule); }
+
+    /* Buttons */
+    .btn-terra {
+      display: inline-block;
+      background: var(--terra);
+      color: #fff;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.85rem 2rem; border-radius: 50px;
+      text-decoration: none; transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      border: none; cursor: pointer;
+    }
+    .btn-terra:hover { background: var(--terra-lt); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(191,92,44,0.35); }
+
+    .btn-outline {
+      display: inline-block;
+      border: 2px solid var(--terra);
+      color: var(--terra);
+      font-family: 'Lato', sans-serif;
+      font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.85rem 2rem; border-radius: 50px;
+      text-decoration: none; transition: background 0.2s, color 0.2s, transform 0.2s;
+    }
+    .btn-outline:hover { background: var(--terra); color: #fff; transform: translateY(-2px); }
+
+    /* Label */
+    .label {
+      display: block;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--terra); margin-bottom: 1rem;
+    }
+
+    /* Card */
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      overflow: hidden;
+    }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(44,31,20,0.12); }
+
+    /* Reveal */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Hero stagger */
+    .h-line { opacity: 0; transform: translateY(28px); }
+    .h-line.in { animation: up 0.75s ease forwards; }
+    @keyframes up { to { opacity: 1; transform: translateY(0); } }
+
+    /* Mobile menu */
+    #mob-menu { display: none; }
+    #mob-menu.open { display: block; }
+
+    /* Pill tag */
+    .pill {
+      display: inline-block;
+      background: rgba(191,92,44,0.1);
+      color: var(--terra);
+      border-radius: 50px; padding: 0.3rem 0.9rem;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+
+    /* Icon wrap */
+    .icon-wrap {
+      width: 3.5rem; height: 3.5rem; border-radius: 50%;
+      background: rgba(191,92,44,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+    }
+
+    /* Quote bar */
+    .quote-bar {
+      background: #fff;
+      border-radius: 12px;
+      border-bottom: 4px solid var(--terra);
+    }
+
+    /* Organic shape background */
+    .blob-section { position: relative; overflow: hidden; }
+    .blob-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(191,92,44,0.06) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* Step circle */
+    .step-circle {
+      width: 3rem; height: 3rem; border-radius: 50%;
+      background: var(--terra);
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* Nav link */
+    .nav-link { font-size: 0.85rem; color: var(--mid); text-decoration: none; transition: color 0.2s; font-weight: 600; }
+    .nav-link:hover, .nav-link.active { color: var(--terra); }
+
+    /* Stat */
+    .stat-big {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 7vw, 5rem);
+      font-weight: 700; color: var(--terra); line-height: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#" class="font-serif text-xl font-bold tracking-wide" style="text-decoration:none;color:var(--text);">Meir Scott</a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#services" class="nav-link">Work With Me</a>
+        <a href="#contact" class="nav-link">Contact</a>
+        <a href="#contact" class="btn-terra">Book a Call</a>
+      </div>
+      <button id="mob-btn" class="md:hidden flex flex-col gap-1.5 p-2" style="background:none;border:none;cursor:pointer;">
+        <span class="block w-6 h-0.5" id="hh1" style="background:var(--text);transition:transform 0.3s;"></span>
+        <span class="block w-6 h-0.5" id="hh2" style="background:var(--text);transition:opacity 0.3s;"></span>
+        <span class="block w-6 h-0.5" id="hh3" style="background:var(--text);transition:transform 0.3s;"></span>
+      </button>
+    </div>
+    <div id="mob-menu" style="background:var(--bg);border-top:1px solid var(--rule);">
+      <div class="flex flex-col px-6 py-5 gap-5">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#services" class="nav-link">Work With Me</a>
+        <a href="#contact" class="nav-link">Contact</a>
+        <a href="#contact" class="btn-terra text-center">Book a Call</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="blob-section" style="min-height:100vh;display:flex;align-items:center;padding:9rem 1.5rem 5rem;">
+    <div class="max-w-6xl mx-auto w-full">
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div>
+          <span class="label h-line" style="animation-delay:0.05s;">Life Coaching</span>
+          <h1 class="h-line" style="font-size:clamp(3rem,8vw,5.5rem);font-weight:700;line-height:1.05;margin-bottom:1.5rem;animation-delay:0.2s;">
+            Live with<br /><em style="color:var(--terra);">intention.</em><br />Act with<br />purpose.
+          </h1>
+          <p class="text-lg leading-relaxed mb-10 h-line" style="color:var(--mid);animation-delay:0.35s;max-width:440px;">
+            Meir Scott is a certified life coach helping driven people break through the noise and build lives of real meaning — one honest conversation at a time.
+          </p>
+          <div class="flex flex-wrap gap-4 h-line" style="animation-delay:0.5s;">
+            <a href="#contact" class="btn-terra">Book a Free Call</a>
+            <a href="#about" class="btn-outline">Learn More</a>
+          </div>
+        </div>
+        <!-- Photo -->
+        <div class="relative reveal hidden md:block" style="transition-delay:0.25s;">
+          <!-- Decorative circle behind -->
+          <div style="position:absolute;top:-5%;right:-5%;width:90%;height:90%;border-radius:50%;background:rgba(191,92,44,0.08);z-index:0;"></div>
+          <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&q=80" alt="Meir Scott" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:20px;position:relative;z-index:1;display:block;box-shadow:0 30px 70px rgba(44,31,20,0.2);" />
+          <!-- Floating badge -->
+          <div style="position:absolute;bottom:2rem;left:-2rem;background:#fff;border-radius:12px;padding:1rem 1.25rem;box-shadow:0 10px 30px rgba(44,31,20,0.15);z-index:2;">
+            <div style="font-size:1.5rem;margin-bottom:0.25rem;">⭐</div>
+            <div style="font-size:0.75rem;font-weight:700;color:var(--text);">ICF Certified Coach</div>
+            <div style="font-size:0.65rem;color:var(--muted);">10+ years experience</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAND -->
+  <section style="background:var(--terra);padding:3rem 1.5rem;">
+    <div class="max-w-5xl mx-auto grid grid-cols-3 gap-8 text-center">
+      <div class="reveal">
+        <div style="font-family:'Playfair Display',serif;font-size:clamp(2.5rem,6vw,4rem);font-weight:700;color:#fff;line-height:1;">10+</div>
+        <div style="font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.75);margin-top:0.5rem;">Years coaching</div>
+      </div>
+      <div class="reveal" style="transition-delay:0.1s;">
+        <div style="font-family:'Playfair Display',serif;font-size:clamp(2.5rem,6vw,4rem);font-weight:700;color:#fff;line-height:1;">300+</div>
+        <div style="font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.75);margin-top:0.5rem;">Clients helped</div>
+      </div>
+      <div class="reveal" style="transition-delay:0.2s;">
+        <div style="font-family:'Playfair Display',serif;font-size:clamp(2.5rem,6vw,4rem);font-weight:700;color:#fff;line-height:1;">ICF</div>
+        <div style="font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.75);margin-top:0.5rem;">Certified</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="blob-section" style="padding:7rem 1.5rem;">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-20 items-center">
+      <div class="reveal">
+        <span class="label">About Meir</span>
+        <h2 style="font-size:clamp(2.5rem,5vw,3.75rem);font-weight:700;line-height:1.1;margin-bottom:1.5rem;">
+          From burnout to <em style="color:var(--terra);">breakthrough</em>
+        </h2>
+        <p class="text-base leading-relaxed mb-4" style="color:var(--mid);">Meir Scott didn't stumble into coaching — he was pushed into it by necessity. After a decade of chasing the wrong version of success, he found himself burned out, disconnected, and searching for something real.</p>
+        <p class="text-base leading-relaxed mb-8" style="color:var(--mid);">Today, he's certified, experienced, and deeply committed to helping others shortcut the hard lessons he had to learn himself. Direct, compassionate, and always rooted in results.</p>
+        <!-- Values pills -->
+        <div class="flex flex-wrap gap-3 mb-10">
+          <span class="pill">Radical Honesty</span>
+          <span class="pill">Action First</span>
+          <span class="pill">Deep Humanity</span>
+        </div>
+        <a href="#contact" class="btn-terra">Work With Meir</a>
+      </div>
+      <!-- Features grid -->
+      <div class="grid grid-cols-2 gap-4 reveal" style="transition-delay:0.15s;">
+        <div class="card p-6">
+          <div class="icon-wrap mb-4">🎯</div>
+          <h4 class="font-bold text-base mb-2">Goal Clarity</h4>
+          <p class="text-sm leading-relaxed" style="color:var(--muted);">Cut through noise. Get clear on what you actually want and why.</p>
+        </div>
+        <div class="card p-6" style="margin-top:1.5rem;">
+          <div class="icon-wrap mb-4">⚡</div>
+          <h4 class="font-bold text-base mb-2">Action Systems</h4>
+          <p class="text-sm leading-relaxed" style="color:var(--muted);">Build habits that make progress inevitable, not occasional.</p>
+        </div>
+        <div class="card p-6">
+          <div class="icon-wrap mb-4">🧠</div>
+          <h4 class="font-bold text-base mb-2">Mindset Shifts</h4>
+          <p class="text-sm leading-relaxed" style="color:var(--muted);">Dismantle the beliefs quietly running the show.</p>
+        </div>
+        <div class="card p-6" style="margin-top:1.5rem;">
+          <div class="icon-wrap mb-4">📈</div>
+          <h4 class="font-bold text-base mb-2">Accountability</h4>
+          <p class="text-sm leading-relaxed" style="color:var(--muted);">Real follow-through support that keeps you moving.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" style="background:var(--surface);padding:7rem 1.5rem;">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16 reveal">
+        <span class="label">Work With Me</span>
+        <h2 style="font-size:clamp(2.5rem,5vw,3.75rem);font-weight:700;line-height:1.1;">
+          Find your perfect <em style="color:var(--terra);">path forward</em>
+        </h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- 1:1 -->
+        <div class="card reveal" style="transition-delay:0s;">
+          <div style="height:6px;background:var(--terra);"></div>
+          <div class="p-8">
+            <div class="icon-wrap mb-5">🎯</div>
+            <span class="pill mb-4" style="display:inline-block;">Most Popular</span>
+            <h3 class="text-2xl font-bold mb-3">1:1 Coaching</h3>
+            <p class="text-sm leading-relaxed mb-6" style="color:var(--muted);">Intensive, personalised sessions built around your goals. Bi-weekly calls, check-ins, custom plan. 3 or 6 month programmes.</p>
+            <a href="#contact" class="btn-terra" style="font-size:0.75rem;padding:0.7rem 1.5rem;">Apply Now</a>
+          </div>
+        </div>
+        <!-- Group -->
+        <div class="card reveal" style="transition-delay:0.1s;">
+          <div style="height:6px;background:var(--sand);"></div>
+          <div class="p-8">
+            <div class="icon-wrap mb-5">👥</div>
+            <span class="pill mb-4" style="display:inline-block;background:rgba(200,169,122,0.15);color:var(--mid);">Community</span>
+            <h3 class="text-2xl font-bold mb-3">Group Programme</h3>
+            <p class="text-sm leading-relaxed mb-6" style="color:var(--muted);">8-week cohort, max 10 people. Shared accountability and peer momentum. Quarterly intake.</p>
+            <a href="#contact" class="btn-outline" style="font-size:0.75rem;padding:0.7rem 1.5rem;">Join Waitlist</a>
+          </div>
+        </div>
+        <!-- Discovery -->
+        <div class="card reveal" style="transition-delay:0.2s;">
+          <div style="height:6px;background:rgba(191,92,44,0.3);"></div>
+          <div class="p-8">
+            <div class="icon-wrap mb-5">📞</div>
+            <span class="pill mb-4" style="display:inline-block;background:rgba(191,92,44,0.08);">Free</span>
+            <h3 class="text-2xl font-bold mb-3">Discovery Call</h3>
+            <p class="text-sm leading-relaxed mb-6" style="color:var(--muted);">Free 30-minute conversation. No pitch, no pressure — just an honest chat about what's possible.</p>
+            <a href="#contact" class="btn-terra" style="font-size:0.75rem;padding:0.7rem 1.5rem;background:rgba(191,92,44,0.15);color:var(--terra);box-shadow:none;" onmouseover="this.style.background='var(--terra)';this.style.color='#fff'" onmouseout="this.style.background='rgba(191,92,44,0.15)';this.style.color='var(--terra)'">Book Free</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section style="padding:7rem 1.5rem;">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-14 reveal">
+        <span class="label">How It Works</span>
+        <h2 style="font-size:clamp(2.5rem,5vw,3.75rem);font-weight:700;line-height:1.1;">
+          From first contact to <em style="color:var(--terra);">lasting change</em>
+        </h2>
+      </div>
+      <div class="space-y-8">
+        <div class="flex gap-5 items-start reveal">
+          <div class="step-circle">1</div>
+          <div style="padding-top:0.4rem;">
+            <h3 class="text-xl font-bold mb-1">Book a Discovery Call</h3>
+            <p class="text-sm leading-relaxed" style="color:var(--mid);">Fill in the form below and we'll set up a free 30-minute call to see what's possible.</p>
+          </div>
+        </div>
+        <div class="flex gap-5 items-start reveal" style="transition-delay:0.1s;">
+          <div class="step-circle">2</div>
+          <div style="padding-top:0.4rem;">
+            <h3 class="text-xl font-bold mb-1">Map Your Journey</h3>
+            <p class="text-sm leading-relaxed" style="color:var(--mid);">Together we define your goals, identify blocks, and design a programme that fits your life.</p>
+          </div>
+        </div>
+        <div class="flex gap-5 items-start reveal" style="transition-delay:0.2s;">
+          <div class="step-circle">3</div>
+          <div style="padding-top:0.4rem;">
+            <h3 class="text-xl font-bold mb-1">Do the Work</h3>
+            <p class="text-sm leading-relaxed" style="color:var(--mid);">Regular sessions, action steps, real accountability. Transformation happens between the calls.</p>
+          </div>
+        </div>
+        <div class="flex gap-5 items-start reveal" style="transition-delay:0.3s;">
+          <div class="step-circle">4</div>
+          <div style="padding-top:0.4rem;">
+            <h3 class="text-xl font-bold mb-1">Sustain the Momentum</h3>
+            <p class="text-sm leading-relaxed" style="color:var(--mid);">We embed habits and systems that keep you moving long after coaching ends.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section style="background:var(--surface);padding:7rem 1.5rem;">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-14 reveal">
+        <span class="label">Results</span>
+        <h2 style="font-size:clamp(2.5rem,5vw,3.75rem);font-weight:700;line-height:1.1;">
+          Words from those who've <em style="color:var(--terra);">done the work</em>
+        </h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="quote-bar p-8 reveal">
+          <div style="font-family:'Playfair Display',serif;font-size:3rem;color:var(--terra);line-height:0.5;margin-bottom:1rem;">"</div>
+          <p class="text-base leading-relaxed mb-5" style="color:var(--mid);">Working with Meir was the turning point I'd been waiting for. Three months in and I finally feel like I'm running my life — not the other way around.</p>
+          <div>
+            <p class="font-bold text-sm">James T.</p>
+            <p class="text-xs" style="color:var(--muted);">Entrepreneur, Leeds</p>
+          </div>
+        </div>
+        <div class="quote-bar p-8 reveal" style="transition-delay:0.1s;">
+          <div style="font-family:'Playfair Display',serif;font-size:3rem;color:var(--terra);line-height:0.5;margin-bottom:1rem;">"</div>
+          <p class="text-base leading-relaxed mb-5" style="color:var(--mid);">His ability to ask the exact right question at the right moment is unlike anything I've experienced. Highly recommend to anyone feeling stuck.</p>
+          <div>
+            <p class="font-bold text-sm">Sarah L.</p>
+            <p class="text-xs" style="color:var(--muted);">Marketing Director, London</p>
+          </div>
+        </div>
+        <div class="quote-bar p-8 reveal" style="transition-delay:0.2s;">
+          <div style="font-family:'Playfair Display',serif;font-size:3rem;color:var(--terra);line-height:0.5;margin-bottom:1rem;">"</div>
+          <p class="text-base leading-relaxed mb-5" style="color:var(--mid);">The group programme gave me accountability, community, and a coach who genuinely cares about your progress. Worth every penny.</p>
+          <div>
+            <p class="font-bold text-sm">David M.</p>
+            <p class="text-xs" style="color:var(--muted);">Teacher turned Founder</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="contact" class="blob-section" style="padding:9rem 1.5rem;text-align:center;">
+    <div class="max-w-3xl mx-auto reveal">
+      <span class="label">Take the first step</span>
+      <h2 style="font-size:clamp(2.75rem,6vw,4.5rem);font-weight:700;line-height:1.1;margin-bottom:1.5rem;">
+        Ready to change <em style="color:var(--terra);">your life?</em>
+      </h2>
+      <p class="text-lg leading-relaxed mb-10" style="color:var(--mid);">Book a free 30-minute discovery call. No pitch, no pressure — just an honest conversation about what's possible.</p>
+      <a href="mailto:hello@meirscott.com" class="btn-terra" style="font-size:0.85rem;padding:1rem 2.5rem;">Book Your Free Call</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:var(--text);padding:3rem 1.5rem;">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+      <span style="font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:#fff;">Meir Scott</span>
+      <div class="flex gap-8">
+        <a href="#about" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.8rem;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">About</a>
+        <a href="#services" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.8rem;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Work With Me</a>
+        <a href="#contact" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.8rem;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Contact</a>
+      </div>
+      <p style="font-size:0.75rem;color:rgba(255,255,255,0.35);">© 2026 Meir Scott Coaching</p>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40), { passive: true });
+
+    const mobBtn = document.getElementById('mob-btn');
+    const mobMenu = document.getElementById('mob-menu');
+    let open = false;
+    mobBtn.addEventListener('click', () => {
+      open = !open;
+      mobMenu.classList.toggle('open', open);
+      document.getElementById('hh1').style.transform = open ? 'rotate(45deg) translate(5px,5px)' : '';
+      document.getElementById('hh2').style.opacity = open ? '0' : '1';
+      document.getElementById('hh3').style.transform = open ? 'rotate(-45deg) translate(5px,-5px)' : '';
+    });
+
+    document.querySelectorAll('.h-line').forEach(el => requestAnimationFrame(() => el.classList.add('in')));
+
+    const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }), { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>

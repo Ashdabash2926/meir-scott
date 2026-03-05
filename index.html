@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meir Scott — Website Design Concepts</title>
+  <meta name="description" content="Five website design concepts for Meir Scott Life Coaching. Browse each design and choose the direction that feels right." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #F8F7F5;
+      --surface: #FFFFFF;
+      --border:  #E8E4DE;
+      --text:    #1A1714;
+      --mid:     #6B6460;
+      --muted:   #9C9490;
+      --accent:  #2D6A4F;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+
+    /* Header */
+    header {
+      border-bottom: 1px solid var(--border);
+      background: #fff;
+      padding: 2rem 2rem 2.5rem;
+      text-align: center;
+    }
+    .eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+    .eyebrow::before, .eyebrow::after {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+      display: inline-block;
+    }
+
+    header h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.25rem, 6vw, 3.5rem);
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+    }
+    header p {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--mid);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* Grid */
+    .grid-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* Card */
+    .design-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+    .design-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+      border-color: transparent;
+    }
+
+    /* Preview band */
+    .preview-band {
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    /* Simulated mini-page inside preview */
+    .mini-page {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .mini-nav { height: 18px; display: flex; align-items: center; padding: 0 12px; gap: 8px; }
+    .mini-dot { width: 18px; height: 3px; border-radius: 2px; opacity: 0.35; }
+    .mini-dot.wide { width: 28px; }
+    .mini-hero { flex: 1; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 0 16px; gap: 6px; }
+    .mini-h { height: 10px; border-radius: 3px; opacity: 0.9; }
+    .mini-h.sm { height: 6px; opacity: 0.5; width: 60%; }
+    .mini-h.btn { height: 10px; border-radius: 3px; width: 60px; margin-top: 4px; opacity: 1; }
+
+    /* Card body */
+    .card-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+    .card-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+      letter-spacing: 0.1em;
+    }
+    .card-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.35rem;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    .card-desc {
+      font-size: 0.85rem;
+      line-height: 1.65;
+      color: var(--mid);
+      flex: 1;
+      margin-bottom: 1.25rem;
+    }
+
+    /* Swatches */
+    .swatches {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 1.25rem;
+    }
+    .swatch {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid rgba(0,0,0,0.08);
+    }
+
+    /* CTA button */
+    .card-btn {
+      display: block;
+      text-align: center;
+      padding: 0.7rem 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+    .card-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* Tag pill on card */
+    .card-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 50px;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Full-width first card */
+    @media (min-width: 700px) {
+      .card-featured {
+        grid-column: span 2;
+      }
+      .card-featured .preview-band { height: 180px; }
+      .card-featured .mini-hero { padding: 0 24px; }
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* Reveal */
+    .card-wrap { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .card-wrap.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <p class="eyebrow">Meir Scott Coaching</p>
+    <h1>Website Design<br /><em>Concepts</em></h1>
+    <p style="margin-top:0.75rem;">Five design directions for your new website. Click any concept to explore it in full — then let us know which feels most like you.</p>
+  </header>
+
+  <!-- CARDS GRID -->
+  <div class="grid-wrap">
+
+    <!-- V1: Navy & Gold -->
+    <div class="card-wrap card-featured">
+      <a href="v1.html" target="_blank" class="design-card">
+        <div class="preview-band" style="background:#1C2434;">
+          <div class="mini-page">
+            <div class="mini-nav" style="background:#243044;">
+              <div class="mini-dot wide" style="background:#C9A84C;opacity:0.9;"></div>
+              <div class="mini-dot" style="background:#9aaabb;"></div>
+              <div class="mini-dot" style="background:#9aaabb;"></div>
+              <div class="mini-dot" style="background:#9aaabb;"></div>
+              <div class="mini-dot btn" style="background:#C9A84C;width:32px;opacity:1;margin-left:auto;border-radius:2px;"></div>
+            </div>
+            <div class="mini-hero">
+              <div class="mini-h" style="background:#9aaabb;width:40%;height:5px;opacity:0.6;"></div>
+              <div class="mini-h" style="background:#FFFFFF;width:75%;height:14px;"></div>
+              <div class="mini-h" style="background:#C9A84C;width:55%;height:14px;"></div>
+              <div class="mini-h sm" style="background:#9aaabb;width:65%;"></div>
+              <div style="display:flex;gap:6px;margin-top:6px;">
+                <div class="mini-h btn" style="background:#C9A84C;"></div>
+                <div class="mini-h btn" style="background:transparent;border:1px solid #C9A84C;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-num">Design 01 · Full 4-page site</div>
+          <span class="card-tag" style="background:rgba(201,168,76,0.12);color:#8B6B14;">Dark &amp; Premium</span>
+          <h2 class="card-title">Navy &amp; Gold</h2>
+          <p class="card-desc">A rich, authoritative feel using deep navy, gold accents, and elegant Cormorant Garamond serif type. Includes full 4-page site: Home, About, Work With Me, and Contact. Polished and premium.</p>
+          <div class="swatches">
+            <div class="swatch" style="background:#1C2434;" title="Navy"></div>
+            <div class="swatch" style="background:#243044;" title="Surface"></div>
+            <div class="swatch" style="background:#C9A84C;" title="Gold"></div>
+            <div class="swatch" style="background:#9aaabb;" title="Muted"></div>
+          </div>
+          <span class="card-btn" style="background:#1C2434;color:#fff;">View Design →</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- V2: Minimal Editorial -->
+    <div class="card-wrap">
+      <a href="v2-minimal.html" target="_blank" class="design-card">
+        <div class="preview-band" style="background:#FAF8F4;">
+          <div class="mini-page">
+            <div class="mini-nav" style="background:#FAF8F4;border-bottom:1px solid #DDD6CB;">
+              <div class="mini-dot wide" style="background:#1A1714;opacity:0.85;"></div>
+              <div class="mini-dot" style="background:#9A8F84;"></div>
+              <div class="mini-dot" style="background:#9A8F84;"></div>
+              <div class="mini-dot btn" style="background:#1A1714;width:30px;opacity:1;margin-left:auto;border-radius:2px;"></div>
+            </div>
+            <div class="mini-hero" style="align-items:flex-start;">
+              <div style="height:4px;background:#8B6B14;width:30px;border-radius:2px;opacity:0.9;margin-bottom:4px;"></div>
+              <div class="mini-h" style="background:#1A1714;width:85%;height:16px;"></div>
+              <div class="mini-h" style="background:#1A1714;width:65%;height:16px;"></div>
+              <div class="mini-h" style="background:#8B6B14;width:45%;height:16px;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-num">Design 02 · Single page</div>
+          <span class="card-tag" style="background:rgba(139,107,20,0.1);color:#8B6B14;">Light &amp; Editorial</span>
+          <h2 class="card-title">Minimal Editorial</h2>
+          <p class="card-desc">A warm off-white canvas with huge Cormorant Garamond type and generous whitespace. Inspired by high-end editorial design. Clean, confident, and typographically led.</p>
+          <div class="swatches">
+            <div class="swatch" style="background:#FAF8F4;" title="Cream"></div>
+            <div class="swatch" style="background:#1A1714;" title="Black"></div>
+            <div class="swatch" style="background:#8B6B14;" title="Warm Gold"></div>
+            <div class="swatch" style="background:#9A8F84;" title="Muted"></div>
+          </div>
+          <span class="card-btn" style="background:#1A1714;color:#FAF8F4;">View Design →</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- V3: Bold Modern -->
+    <div class="card-wrap">
+      <a href="v3-bold.html" target="_blank" class="design-card">
+        <div class="preview-band" style="background:#080C14;">
+          <div class="mini-page">
+            <div class="mini-nav" style="background:#0E1420;">
+              <div class="mini-dot wide" style="background:#fff;opacity:0.9;"></div>
+              <div class="mini-dot" style="background:#7A8A9E;"></div>
+              <div class="mini-dot" style="background:#7A8A9E;"></div>
+              <div class="mini-dot btn" style="background:#4D8EFF;width:30px;opacity:1;margin-left:auto;border-radius:3px;"></div>
+            </div>
+            <div class="mini-hero">
+              <div class="mini-h" style="background:#fff;width:80%;height:15px;font-weight:900;"></div>
+              <div class="mini-h" style="background:#fff;width:60%;height:15px;"></div>
+              <div class="mini-h" style="background:#4D8EFF;width:70%;height:15px;"></div>
+              <div style="display:flex;gap:6px;margin-top:6px;">
+                <div class="mini-h btn" style="background:#4D8EFF;border-radius:4px;"></div>
+                <div class="mini-h btn" style="background:transparent;border:2px solid #4D8EFF;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-num">Design 03 · Single page</div>
+          <span class="card-tag" style="background:rgba(77,142,255,0.1);color:#2B5CE6;">Bold &amp; Modern</span>
+          <h2 class="card-title">Dark Bold Modern</h2>
+          <p class="card-desc">Near-black background with electric blue accents and heavy Inter type. High-energy, ambitious, and tech-forward. Conveys drive, results, and authority — without feeling corporate.</p>
+          <div class="swatches">
+            <div class="swatch" style="background:#080C14;" title="Near Black"></div>
+            <div class="swatch" style="background:#0E1420;" title="Surface"></div>
+            <div class="swatch" style="background:#4D8EFF;" title="Electric Blue"></div>
+            <div class="swatch" style="background:#7A8A9E;" title="Muted"></div>
+          </div>
+          <span class="card-btn" style="background:#4D8EFF;color:#fff;">View Design →</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- V4: Warm Earth -->
+    <div class="card-wrap">
+      <a href="v4-warm.html" target="_blank" class="design-card">
+        <div class="preview-band" style="background:#F7F1E8;">
+          <div class="mini-page">
+            <div class="mini-nav" style="background:#F7F1E8;border-bottom:1px solid #D8CCBC;">
+              <div class="mini-dot wide" style="background:#2C1F14;opacity:0.85;"></div>
+              <div class="mini-dot" style="background:#A08870;"></div>
+              <div class="mini-dot" style="background:#A08870;"></div>
+              <div class="mini-dot btn" style="background:#BF5C2C;width:30px;opacity:1;margin-left:auto;border-radius:50px;"></div>
+            </div>
+            <div class="mini-hero">
+              <div style="height:4px;background:#BF5C2C;width:28px;border-radius:2px;margin-bottom:4px;"></div>
+              <div class="mini-h" style="background:#2C1F14;width:70%;height:13px;"></div>
+              <div class="mini-h" style="background:#BF5C2C;width:45%;height:13px;font-style:italic;"></div>
+              <div class="mini-h sm" style="background:#6B5040;width:80%;"></div>
+              <div style="display:flex;gap:6px;margin-top:6px;">
+                <div class="mini-h btn" style="background:#BF5C2C;border-radius:50px;"></div>
+                <div class="mini-h btn" style="background:transparent;border:2px solid #BF5C2C;border-radius:50px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-num">Design 04 · Single page</div>
+          <span class="card-tag" style="background:rgba(191,92,44,0.1);color:#BF5C2C;">Warm &amp; Earthy</span>
+          <h2 class="card-title">Warm Earth</h2>
+          <p class="card-desc">Warm cream and terracotta tones with Playfair Display serif type. Approachable, human, and lifestyle-led. Rounded pill buttons and soft card shapes give it an inviting, grounded feel.</p>
+          <div class="swatches">
+            <div class="swatch" style="background:#F7F1E8;" title="Cream"></div>
+            <div class="swatch" style="background:#2C1F14;" title="Dark Brown"></div>
+            <div class="swatch" style="background:#BF5C2C;" title="Terracotta"></div>
+            <div class="swatch" style="background:#C8A97A;" title="Sand"></div>
+          </div>
+          <span class="card-btn" style="background:#BF5C2C;color:#fff;">View Design →</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- V5: Professional Warm -->
+    <div class="card-wrap">
+      <a href="v5-professional.html" target="_blank" class="design-card">
+        <div class="preview-band" style="background:#F5F0E8;">
+          <div class="mini-page">
+            <div class="mini-nav" style="background:#F5F0E8;border-bottom:1px solid #D0C9B8;">
+              <div style="width:10px;height:10px;background:#1E3D30;border-radius:3px;flex-shrink:0;"></div>
+              <div class="mini-dot wide" style="background:#1E3D30;opacity:0.85;margin-left:4px;"></div>
+              <div class="mini-dot" style="background:#8A9E94;"></div>
+              <div class="mini-dot" style="background:#8A9E94;"></div>
+              <div class="mini-dot btn" style="background:#1E3D30;width:30px;opacity:1;margin-left:auto;border-radius:5px;"></div>
+            </div>
+            <div class="mini-hero">
+              <div style="height:4px;background:#4D8066;width:28px;border-radius:2px;margin-bottom:6px;"></div>
+              <div class="mini-h" style="background:#1A2820;width:80%;height:12px;"></div>
+              <div class="mini-h" style="background:#1A2820;width:65%;height:12px;"></div>
+              <div class="mini-h" style="background:#4D8066;width:50%;height:12px;"></div>
+              <div style="display:flex;gap:6px;margin-top:6px;">
+                <div class="mini-h btn" style="background:#1E3D30;border-radius:5px;"></div>
+                <div class="mini-h btn" style="background:transparent;border:2px solid #4D8066;border-radius:5px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-num">Design 05 · Single page</div>
+          <span class="card-tag" style="background:rgba(77,128,102,0.1);color:#2D6A4F;">Professional &amp; Warm</span>
+          <h2 class="card-title">Professional Warm</h2>
+          <p class="card-desc">Deep forest green with warm cream and amber accents, using DM Serif Display type. Trustworthy and professional with genuine warmth. Features floating social-proof cards, star ratings, and a strong two-tone layout.</p>
+          <div class="swatches">
+            <div class="swatch" style="background:#F5F0E8;" title="Warm Cream"></div>
+            <div class="swatch" style="background:#1E3D30;" title="Forest Green"></div>
+            <div class="swatch" style="background:#4D8066;" title="Sage"></div>
+            <div class="swatch" style="background:#C4882A;" title="Amber"></div>
+          </div>
+          <span class="card-btn" style="background:#1E3D30;color:#fff;">View Design →</span>
+        </div>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Prepared for <strong>Meir Scott</strong> · All designs are fully working — click any card to explore. Let us know which direction resonates.</p>
+  </footer>
+
+  <script>
+    const obs = new IntersectionObserver(es => es.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        obs.unobserve(e.target);
+      }
+    }), { threshold: 0.08 });
+    document.querySelectorAll('.card-wrap').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>
